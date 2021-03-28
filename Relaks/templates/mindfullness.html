@@ -2,13 +2,21 @@
 {% block content %}
     <h1> <p style="text-align: center"> Ćwiczenia związane </p>
         <p style="text-align: center"> z uważnością </p> </h1>
-      {% for post in post %}
+      {% for post in post.items %}
           <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ url_for('static', filename='photo/' + post.author.image_file) }}">
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2" href="#">{{ post.author.username }}</a>
-              <small class="text-muted">{{ post.category }} , </small>
+              <small class="article-category">
+
+          <a
+            class="mr-2"
+            href="{{ url_for('mindfullness', category=post.category) }}"
+            >{{ post.category }}</a>
+
+
+                </small>
                 <small class="text-muted">Czas trwania: {{ post.time }}</small>
             </div>
             <h2> <a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.name}}</a> </h2>
@@ -16,4 +24,15 @@
           </div>
         </article>
     {% endfor %}
+      {% for page_num in post.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if post.page == page_num %}
+                <a class="btn btn-info mb-4" style="background-color: darkslategrey; border-color: #26432a" href="{{ url_for('mindfullness', page=page_num)  }}"> {{ page_num }}</a>
+             {% else %}
+                <a class="btn btn-outline-info mb-4" style="background-color: darkslategrey; border-color: #26432a; " href="{{ url_for('mindfullness', page=page_num)  }}"> {{ page_num }}</a>
+             {% endif %}
+        {% else %}
+        {% endif %}
+    {% endfor %}
+
 {% endblock content %}

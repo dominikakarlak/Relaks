@@ -1,23 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
-     <h1 style="text-align: center"> Ćwiczenia  </h1>
+
+     <h1 style="text-align: center"> Relaksacja dla zapracowanych </h1>
+
+         <div class="content-section" style="display: block">
+               <h2 style="text-align: center"> Na tej stronie: </h2>
+               <li> <a href="{{ url_for('stres') }}" style="color: darkslategrey"> Dowiesz się dlaczego relaks jest ważny. </a> </li>
+               <li> <a href="{{ url_for('dobor') }}" style="color: darkslategrey"> Wybierzesz odpowiednią dla siebie technikę relaksacji. </a> </li>
+               <li>  Poznasz krótkie ćwiczenia: </li>
+                    <ul>
+                        <li> <a href="{{ url_for('oddech') }}" style="color: darkslategrey">  oddechowe, </a> </li>
+                        <li> <a href="{{ url_for('miesnie') }}" style="color: darkslategrey">  z użyciem mięśni, </a> </li>
+                        <li> <a href="{{ url_for('mindfullness') }}" style="color: darkslategrey">  midfullness, </a> </li>
+                        <li> <a href="{{ url_for('wizualizacje') }}" style="color: darkslategrey">  wizualizacyjne, </a> </li>
+                        <li> <a href="{{ url_for('inne') }}" style="color: darkslategrey">  i inne. </a> </li>
+
+                    </ul>
+                <li> <a href="{{ url_for('harmonogram') }}" style="color: darkslategrey"> Stworzysz swój uniaklny plan działania. </a> </li>
 
 
-    {% for post in post %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ url_for('static', filename='photo/' + post.author.image_file) }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author.username }}</a>
-              <small class="text-muted">{{ post.category }} , </small>
-                <small class="text-muted">Czas trwania: {{ post.time }}</small>
-            </div>
-            <h2> <a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.name}}</a> </h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
-
-    {% endfor %}
+           </div>
 
 
 

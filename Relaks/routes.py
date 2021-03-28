@@ -11,7 +11,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route("/")
 @app.route("/home")
 def home():
-    post = Post.query.all()
+    page = request.args.get('page', 1, type=int)
+    post = Post.query.order_by(Post.category).paginate(page=page, per_page=5)
     return render_template('home.html', post=post)
 
 
@@ -107,6 +108,63 @@ def logout():
 @app.route("/oddechowe", methods=['GET', 'POST'])
 @login_required
 def oddech():
+    page = request.args.get('page', 1, type=int)
+    post = Post.query.filter(
+        Post.category == 'oddechowe').paginate(page=page, per_page=5)
+
+
+    return render_template('oddech.html', title='Oddechowe',  post=post)
+
+
+@app.route("/miesnie", methods=['GET', 'POST'])
+@login_required
+def miesnie():
+    page = request.args.get('page', 1, type=int)
+    post = Post.query.filter(
+        Post.category == 'mięśniowe').paginate(page=page, per_page=5)
+
+    return render_template('miesnie.html', title='Mięśnie', post=post)
+
+
+@app.route("/mindfullness", methods=['GET', 'POST'])
+@login_required
+def mindfullness():
+    page = request.args.get('page', 1, type=int)
+    post = Post.query.filter(
+        Post.category == 'mindfullness').paginate(page=page, per_page=5)
+
+    return render_template('mindfullness.html', title='Mindfullness', post=post)
+
+
+@app.route("/wizualizacje", methods=['GET', 'POST'])
+@login_required
+def wizualizacje():
+    page = request.args.get('page', 1, type=int)
+    post = Post.query.filter(
+        Post.category == 'wizualizacje').paginate(page=page, per_page=5)
+
+    return render_template('wizualizacje.html', title='Wizualizacje', post=post)
+
+
+@app.route("/inne", methods=['GET', 'POST'])
+@login_required
+def inne():
+    page = request.args.get('page', 1, type=int)
+
+    post = Post.query.filter(
+        Post.category == 'inne').paginate(page=page, per_page=5)
+    return render_template('inne.html', title='Inne', post=post)
+
+
+@app.route("/post/<int:post_id>")
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title=post.name, post=post)
+
+
+@app.route("/post/new", methods=['GET', 'POST'])
+@login_required
+def new_post():
     form = PostForm()
     if form.validate_on_submit():
         post = Post(name=form.name.data, category=form.category.data, time=form.time.data, content=form.content.data,
@@ -115,43 +173,7 @@ def oddech():
         db.session.commit()
         flash('Twój post został stworzony!', 'success')
         return redirect(url_for('home'))
-
-    post = Post.query.all()
-    return render_template('oddech.html', title='Oddechowe', form=form, post=post)
-
-
-@app.route("/miesnie", methods=['GET', 'POST'])
-@login_required
-def miesnie():
-    post = Post.query.all()
-    return render_template('miesnie.html', title='Mięśnie', post=post)
-
-
-@app.route("/mindfullness", methods=['GET', 'POST'])
-@login_required
-def mindfullness():
-    post = Post.query.all()
-    return render_template('mindfullness.html', title='Mindfullness', post=post)
-
-
-@app.route("/wizualizacje", methods=['GET', 'POST'])
-@login_required
-def wizualizacje():
-    post = Post.query.all()
-    return render_template('wizualizacje.html', title='Wizualizacje', post=post)
-
-
-@app.route("/inne", methods=['GET', 'POST'])
-@login_required
-def inne():
-    post = Post.query.all()
-    return render_template('inne.html', title='Inne', post=post)
-
-
-@app.route("/post/<int:post_id>")
-def post(post_id):
-    post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.name, post=post)
+    return render_template('create_post.html', title='Nowe ćwiczenie', form=form)
 
 
 @app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
@@ -188,3 +210,13 @@ def delete_post(post_id):
     db.session.commit()
     flash('Twój post został usunięty ', 'success')
     return redirect(url_for('home'))
+
+
+@app.route("/category/<category>")
+def category_posts(category):
+    page = request.args.get('page', 1, type=int)
+    category = Post.category.query.filter_by(category.category).first_or_404()
+    post = Post.query.filter_by(category) \
+        .order_by(Post.category) \
+        .paginate(page=page, per_page=5)
+    return render_template('category_posts.html', post=post, category=category)

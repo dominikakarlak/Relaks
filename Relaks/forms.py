@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from Relaks.models import User
 
@@ -58,7 +58,8 @@ class UpdateAccountForm(FlaskForm):
 
 class PostForm(FlaskForm):
     name = StringField('Tytuł', validators=[DataRequired()])
-    category = StringField('Kategoria', validators=[DataRequired()])
+    category = SelectField('Kategoria', validators=[DataRequired()], choices=[('oddechowe'), ('mięśniowe'),
+                                                                              ('mindfullness'), ('wizualizacje'), ('inne')])
     time = IntegerField('Czas trwania', validators=[DataRequired()])
     content = TextAreaField('Zawartość', validators=[DataRequired()])
     submit = SubmitField('Post')
