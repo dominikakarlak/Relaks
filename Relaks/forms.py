@@ -63,3 +63,5 @@ class PostForm(FlaskForm):
     time = IntegerField('Czas trwania', validators=[DataRequired()])
     content = TextAreaField('Zawartość', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+

@@ -6,7 +6,7 @@ from Relaks import app, db, bcrypt
 from Relaks.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from Relaks.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
-
+from flask_admin import Admin
 
 @app.route("/")
 @app.route("/home")
@@ -60,6 +60,7 @@ def account():
     image_file = url_for('static', filename='photo/' + current_user.image_file)
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
+
 
 
 @app.route("/harmonogram")
@@ -220,3 +221,12 @@ def category_posts(category):
         .order_by(Post.category) \
         .paginate(page=page, per_page=5)
     return render_template('category_posts.html', post=post, category=category)
+
+
+@app.route("/user/<string:username>")
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author=user)\
+        .paginate(page=page, per_page=5)
+    return render_template('user_posts.html', posts=posts, user=user)
