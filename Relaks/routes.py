@@ -110,7 +110,7 @@ def logout():
 def oddech():
     page = request.args.get('page', 1, type=int)
     post = Post.query.filter(
-        Post.category == 'oddechowe').paginate(page=page, per_page=5)
+        Post.category == 'oddechowe').paginate(page=page, per_page=3)
 
 
     return render_template('oddech.html', title='Oddechowe',  post=post)
@@ -121,7 +121,7 @@ def oddech():
 def miesnie():
     page = request.args.get('page', 1, type=int)
     post = Post.query.filter(
-        Post.category == 'mięśniowe').paginate(page=page, per_page=5)
+        Post.category == 'mięśniowe').paginate(page=page, per_page=3)
 
     return render_template('miesnie.html', title='Mięśnie', post=post)
 
@@ -131,7 +131,7 @@ def miesnie():
 def mindfullness():
     page = request.args.get('page', 1, type=int)
     post = Post.query.filter(
-        Post.category == 'mindfullness').paginate(page=page, per_page=5)
+        Post.category == 'mindfullness').paginate(page=page, per_page=3)
 
     return render_template('mindfullness.html', title='Mindfullness', post=post)
 
@@ -141,7 +141,7 @@ def mindfullness():
 def wizualizacje():
     page = request.args.get('page', 1, type=int)
     post = Post.query.filter(
-        Post.category == 'wizualizacje').paginate(page=page, per_page=5)
+        Post.category == 'wizualizacje').paginate(page=page, per_page=3)
 
     return render_template('wizualizacje.html', title='Wizualizacje', post=post)
 
@@ -152,7 +152,7 @@ def inne():
     page = request.args.get('page', 1, type=int)
 
     post = Post.query.filter(
-        Post.category == 'inne').paginate(page=page, per_page=5)
+        Post.category == 'inne').paginate(page=page, per_page=3)
     return render_template('inne.html', title='Inne', post=post)
 
 
