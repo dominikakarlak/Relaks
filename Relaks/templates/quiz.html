@@ -1,19 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Quiz</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <script type="text/javascript" href="{{ url_for('static', filename='quiz.js') }}"> </script>
-</head>
-<body>
 
 
 
 
-</form>
-</body>
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="text-align: center"> Quiz </h1>
 
+{% if current_user.is_authenticated %}
 
+    <div class="content-section">
+         <div>
+        <form method="POST" action="">
+        {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today</legend>
+                <div class="form-group">{% for field in form %}
+                    {{ field.label(class="form-control-label") }}
 
-</html>
+                    {% if field.errors %}
+                        {{ field(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in field.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ field(class="form-control form-control-lg") }}
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </fieldset>
+            <input type="submit" class="btn btn-primary" value="przeslij">
+        </form>
+          </div>
+    </div>
+    {% endif %}
+
+{% endblock content %}

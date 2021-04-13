@@ -3,10 +3,10 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from Relaks import app, db, bcrypt
-from Relaks.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from Relaks.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuizForm
 from Relaks.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
-from flask_admin import Admin
+
 
 @app.route("/")
 @app.route("/home")
@@ -230,3 +230,41 @@ def user_posts(username):
     posts = Post.query.filter_by(author=user)\
         .paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
+
+
+@app.route("/quiz", methods=['GET', 'POST'])
+def quiz():
+    form = QuizForm()
+    if form.validate_on_submit():
+        res ={
+            'a': 0,
+            'b': 0,
+            'c': 0,
+            'd': 0,
+        }
+        for field in form:
+            data = field.data
+            if data in ['a', 'b', 'c', 'd']:
+                res[data] += 1
+
+        most = 'a'
+        for key in res:
+            if res[key] > res[most]:
+                most = key
+
+        if most == 'a':
+            return redirect(url_for('oddech'))
+
+        if most == 'b':
+            return redirect(url_for('miesnie'))
+
+        if most == 'c':
+            return redirect(url_for('mindfullness'))
+
+        if most == 'd':
+            return redirect(url_for('wizualizacje'))
+
+
+    page = request.args.get('page', 1, type=int)
+    post = Post.query.order_by(Post.category).paginate(page=page, per_page=5)
+    return render_template('quiz.html', post=post, form=form)

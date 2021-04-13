@@ -65,3 +65,13 @@ class PostForm(FlaskForm):
     submit = SubmitField('Post')
 
 
+class QuizForm(FlaskForm):
+    q1 = SelectField('Kto jest Twoim ulubionym prowadzącym?', validators=[DataRequired()], choices=[('a', 'Korwin'), ('b', 'Godny'),
+                                                                                                    ('c', 'Jurek'), ('d', 'Chojna'), ])
+    q2 = SelectField('Jaki jest Twój ulubiony zwierz', validators=[DataRequired()],
+                     choices=[('a', 'kot'), ('b', 'pies'),
+                              ('c', 'pyton'), ('d', 'chomik'), ])
+    q3 = SelectField('Czy lubisz pierogi?', validators=[DataRequired()],
+                     choices=[('a', 'Tak'), ('b', 'Bardzo tak'),
+                              ('c', 'Oj taaak'), ('d', 'Totalnie tak'), ])
+
