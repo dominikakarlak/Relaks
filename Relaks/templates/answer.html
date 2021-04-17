@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="text-align: center"> Twoje wyniki </h1>
+     <article class="media content-section">
+
+
+    {% if most=='a' %}
+         <div style="margin: 10px;"></div>
+           <p> oddech </p>
+         </div>
+
+     {% elif most == 'b' %}
+        <div style="margin: 10px;"></div>
+           <p> mięsniowe</p>
+         </div>
+
+     {% elif most == 'c' %}
+         <div style="margin: 10px;"></div>
+           <p> wizualizacyjne</p>
+         </div>
+
+    {% elif most == 'd' %}
+         <div style="margin: 10px;"></div>
+           <p> mindfullness</p>
+        </div>
+
+
+    {% else %}
+           <div style="margin: 10px;"></div>
+           Inne
+         </div>
+    {% endif%}
+     </article>
+{% endblock content %}

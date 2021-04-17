@@ -9,10 +9,17 @@
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2" href="#">{{ post.author.username }}</a>
-                {% if post.author == current_user %}
+
+
+                    {% if post.author == current_user or current_user.is_admin %}
+
+                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal" style="display: block">Usuń</button>
+
+                        {% endif %}
+
+                   {% if post.author == current_user %}
                 <div>
                     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}" > Edytuj </a>
-                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Usuń</button>
 
                 </div>
                 {% endif %}

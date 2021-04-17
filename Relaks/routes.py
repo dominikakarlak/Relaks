@@ -62,7 +62,6 @@ def account():
                            image_file=image_file, form=form)
 
 
-
 @app.route("/harmonogram")
 @login_required
 def harmonogram():
@@ -71,12 +70,17 @@ def harmonogram():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    if User.query.filter_by(is_admin=True).first() is None:
+        hashed_password = bcrypt.generate_password_hash("admin123").decode('utf-8')
+        admin = User(username="Admin", email="admin@email.com", password=hashed_password, is_admin=True)
+        db.session.add(admin)
+        db.session.commit()
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password, is_admin=False)
         db.session.add(user)
         db.session.commit()
         flash(f'Twoje konto zostało utworzone! Teraz możesz się zalogować.', 'success')
@@ -113,8 +117,7 @@ def oddech():
     post = Post.query.filter(
         Post.category == 'oddechowe').paginate(page=page, per_page=3)
 
-
-    return render_template('oddech.html', title='Oddechowe',  post=post)
+    return render_template('oddech.html', title='Oddechowe', post=post)
 
 
 @app.route("/miesnie", methods=['GET', 'POST'])
@@ -205,7 +208,7 @@ def update_post(post_id):
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
+    if post.author != current_user and not current_user.is_admin:
         abort(403)
     db.session.delete(post)
     db.session.commit()
@@ -227,16 +230,22 @@ def category_posts(category):
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user)\
+    posts = Post.query.filter_by(author=user) \
         .paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
+
+
+@app.route("/anwer", methods=['GET', 'POST'])
+def answer():
+
+    return render_template('answer.html')
 
 
 @app.route("/quiz", methods=['GET', 'POST'])
 def quiz():
     form = QuizForm()
     if form.validate_on_submit():
-        res ={
+        res = {
             'a': 0,
             'b': 0,
             'c': 0,
@@ -247,23 +256,26 @@ def quiz():
             if data in ['a', 'b', 'c', 'd']:
                 res[data] += 1
 
-        most = 'a'
+        most = 'b'
         for key in res:
             if res[key] > res[most]:
                 most = key
 
-        if most == 'a':
-            return redirect(url_for('oddech'))
+            return redirect(url_for('answer', most=most))
+        #if most == 'a':
+           # return redirect(url_for('answer'))
 
-        if most == 'b':
-            return redirect(url_for('miesnie'))
+        #if most == 'b':
+            #return redirect(url_for('answer'))
 
-        if most == 'c':
-            return redirect(url_for('mindfullness'))
+        #if most == 'c':
+            #return redirect(url_for('answer'))
 
-        if most == 'd':
-            return redirect(url_for('wizualizacje'))
+        #if most == 'd':
+            #return redirect(url_for('answer'))
 
+       # else :
+           # return redirect(url_for('answer'))
 
     page = request.args.get('page', 1, type=int)
     post = Post.query.order_by(Post.category).paginate(page=page, per_page=5)
