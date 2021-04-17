@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
+    fav = db.relationship('Favourite', backref='author', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -28,6 +29,18 @@ class Post(db.Model):
     time = db.Column(db.Integer, nullable=True)
     content = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    fav = db.relationship('Favourite', backref='fav', lazy=True)
 
     def __repr__(self):
         return f"Post('{self.name}', '{self.category}', '{self.time}')"
+
+
+class Favourite(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Favourite('{self.fav_id}')"
+
+

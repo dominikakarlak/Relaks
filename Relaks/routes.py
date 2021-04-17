@@ -3,8 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from Relaks import app, db, bcrypt
-from Relaks.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuizForm
-from Relaks.models import User, Post
+from Relaks.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuizForm, FavForm
+from Relaks.models import User, Post, Favourite
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -62,7 +62,7 @@ def account():
                            image_file=image_file, form=form)
 
 
-@app.route("/harmonogram")
+@app.route("/harmonogram", methods=['GET', 'POST'])
 @login_required
 def harmonogram():
     return render_template('harmonogram.html', title='Harmonogram')
@@ -163,7 +163,12 @@ def inne():
 @app.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.name, post=post)
+    form = FavForm()
+    if form.validate_on_submit():
+        post.append(current_user.fav)
+        db.session.add(current_user.fav)
+        db.session.commit()
+    return render_template('post.html', title=post.name, post=post, form=form)
 
 
 @app.route("/post/new", methods=['GET', 'POST'])
@@ -235,10 +240,29 @@ def user_posts(username):
     return render_template('user_posts.html', posts=posts, user=user)
 
 
-@app.route("/anwer", methods=['GET', 'POST'])
+@app.route("/answer", methods=['GET', 'POST'])
 def answer():
-
     return render_template('answer.html')
+
+
+@app.route("/answerb", methods=['GET', 'POST'])
+def answerb():
+    return render_template('answerb.html')
+
+
+@app.route("/answerc", methods=['GET', 'POST'])
+def answerc():
+    return render_template('answerc.html')
+
+
+@app.route("/answerd", methods=['GET', 'POST'])
+def answerd():
+    return render_template('answerd.html')
+
+
+@app.route("/answerinne", methods=['GET', 'POST'])
+def answerinne():
+    return render_template('answerinne.html')
 
 
 @app.route("/quiz", methods=['GET', 'POST'])
@@ -256,26 +280,25 @@ def quiz():
             if data in ['a', 'b', 'c', 'd']:
                 res[data] += 1
 
-        most = 'b'
+        most = 'a'
         for key in res:
             if res[key] > res[most]:
                 most = key
 
-            return redirect(url_for('answer', most=most))
-        #if most == 'a':
-           # return redirect(url_for('answer'))
+        if most == 'a':
+            return redirect(url_for('answer'))
 
-        #if most == 'b':
-            #return redirect(url_for('answer'))
+        if most == 'b':
+            return redirect(url_for('answerb'))
 
-        #if most == 'c':
-            #return redirect(url_for('answer'))
+        if most == 'c':
+            return redirect(url_for('answerc'))
 
-        #if most == 'd':
-            #return redirect(url_for('answer'))
+        if most == 'd':
+            return redirect(url_for('answerd'))
 
-       # else :
-           # return redirect(url_for('answer'))
+        else:
+            return redirect(url_for('answerinne'))
 
     page = request.args.get('page', 1, type=int)
     post = Post.query.order_by(Post.category).paginate(page=page, per_page=5)
