@@ -70,7 +70,7 @@ class QuizForm(FlaskForm):
     q1 = SelectField('Ile czasu możesz poświęcić na praktykę?', validators=[DataRequired()],
                      choices=[('a', '3-5 minut dziennie'), ('b', 'około 30 minut'),
                               ('c', 'różnie'), ('d', '10 minut'), ])
-    q2 = SelectField('Czego najbardziej potrzebujesz>', validators=[DataRequired()],
+    q2 = SelectField('Czego najbardziej potrzebujesz?', validators=[DataRequired()],
                      choices=[('a', 'ograniczyć lęk'), ('b', 'rozluźnić się'),
                               ('c', 'zregenerować umysł'), ('d', 'poprawić jakość snu'), ])
     q3 = SelectField('Czy jesteś systematyczny?', validators=[DataRequired()],

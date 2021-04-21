@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1> Twoje ulubione ćwiczenia </h1>
+
+
+    {% for post in favourites %}
+      <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ url_for('static', filename='photo/' + post.fav.author.image_file) }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              
+              <a class="mr-2" href="{{ url_for('user_posts', username=post.fav.author.username) }}">{{ post.fav.author.username }}</a>
+                <a class="mr-2" href="{{ url_for('oddech', category=post.fav.category) }}" >{{ post.fav.category }}</a>
+              <small class="text-muted">{{ post.fav.time }}</small>
+            </div>
+            <h2> <a class="article-title" href="{{ url_for('post', post_id=post.fav.id) }}">{{ post.fav.name}}</a> </h2>
+            <p class="article-content">{{ post.fav.content }}</p>
+          </div>
+        </article>
+
+    {% endfor %}
+
+
+{% endblock content %}

@@ -1,11 +1,13 @@
 import os
 import secrets
+import sys
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from Relaks import app, db, bcrypt
 from Relaks.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuizForm, FavForm
 from Relaks.models import User, Post, Favourite
 from flask_login import login_user, current_user, logout_user, login_required
+
 
 
 @app.route("/")
@@ -62,10 +64,30 @@ def account():
                            image_file=image_file, form=form)
 
 
-@app.route("/harmonogram", methods=['GET', 'POST'])
+@app.route("/dodaj_do_ulubionych/<int:post_id>", methods=['GET', 'POST'])
 @login_required
-def harmonogram():
-    return render_template('harmonogram.html', title='Harmonogram')
+def dodaj_do_ulubionych(post_id):
+
+    is_favourite = Favourite.query.filter_by(user_id=current_user.id, post_id=post_id).first()
+    if is_favourite is None:
+        favourites = Favourite(user_id=current_user.id, post_id=post_id)
+        db.session.add(favourites)
+        db.session.commit()
+        #print(current_user.fav, file=sys.stderr)
+        return redirect(url_for('post', post_id=post_id))
+    else:
+        db.session.delete(is_favourite)
+        db.session.commit()
+
+        return redirect(url_for('post', post_id=post_id))
+
+@app.route("/ulubione", methods=['GET', 'POST'])
+def ulubione():
+    #page = request.args.get('page', 1, type=int)
+    favourites = Favourite.query.filter_by(user_id=current_user.id)
+
+    return render_template('ulubione.html', favourites=favourites)
+
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -163,12 +185,17 @@ def inne():
 @app.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    form = FavForm()
-    if form.validate_on_submit():
-        post.append(current_user.fav)
-        db.session.add(current_user.fav)
-        db.session.commit()
-    return render_template('post.html', title=post.name, post=post, form=form)
+
+    is_favourite = Favourite.query.filter_by(user_id=current_user.id, post_id=post_id).first()
+    if is_favourite is None:
+        is_favourite=False
+
+    else:
+        is_favourite=True
+
+
+
+    return render_template('post.html', title=post.name, post=post, is_favourite=is_favourite)
 
 
 @app.route("/post/new", methods=['GET', 'POST'])
@@ -209,14 +236,25 @@ def update_post(post_id):
     return render_template('update.html', title=update_post, post=post, form=form, legend='Edytuj post')
 
 
-@app.route("/post/<int:post_id>/delete", methods=['POST'])
+@app.route("/post/<int:post_id>/delete", methods=['POST', 'GET'])
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
+    is_favourite = Favourite.query.filter_by(user_id=current_user.id, post_id=post_id).first()
     if post.author != current_user and not current_user.is_admin:
         abort(403)
-    db.session.delete(post)
+
+    if is_favourite==True:
+
+        db.session.delete(is_favourite)
+        db.session.delete(post)
+
+
+    else:
+        db.session.delete(post)
+
     db.session.commit()
+
     flash('Twój post został usunięty ', 'success')
     return redirect(url_for('home'))
 
