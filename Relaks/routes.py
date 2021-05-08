@@ -4,10 +4,9 @@ import sys
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from Relaks import app, db, bcrypt
-from Relaks.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuizForm, FavForm
-from Relaks.models import User, Post, Favourite
+from Relaks.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, QuizForm, FavForm, AddCommentForm
+from Relaks.models import User, Post, Favourite, Comment
 from flask_login import login_user, current_user, logout_user, login_required
-
 
 
 @app.route("/")
@@ -67,13 +66,12 @@ def account():
 @app.route("/dodaj_do_ulubionych/<int:post_id>", methods=['GET', 'POST'])
 @login_required
 def dodaj_do_ulubionych(post_id):
-
     is_favourite = Favourite.query.filter_by(user_id=current_user.id, post_id=post_id).first()
     if is_favourite is None:
         favourites = Favourite(user_id=current_user.id, post_id=post_id)
         db.session.add(favourites)
         db.session.commit()
-        #print(current_user.fav, file=sys.stderr)
+        # print(current_user.fav, file=sys.stderr)
         return redirect(url_for('post', post_id=post_id))
     else:
         db.session.delete(is_favourite)
@@ -81,13 +79,13 @@ def dodaj_do_ulubionych(post_id):
 
         return redirect(url_for('post', post_id=post_id))
 
+
 @app.route("/ulubione", methods=['GET', 'POST'])
 def ulubione():
-    #page = request.args.get('page', 1, type=int)
+    # page = request.args.get('page', 1, type=int)
     favourites = Favourite.query.filter_by(user_id=current_user.id)
 
     return render_template('ulubione.html', favourites=favourites)
-
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -182,20 +180,29 @@ def inne():
     return render_template('inne.html', title='Inne', post=post)
 
 
-@app.route("/post/<int:post_id>")
+@app.route("/post/<int:post_id>", methods=['GET', 'POST'])
 def post(post_id):
     post = Post.query.get_or_404(post_id)
 
     is_favourite = Favourite.query.filter_by(user_id=current_user.id, post_id=post_id).first()
     if is_favourite is None:
-        is_favourite=False
+        is_favourite = False
 
     else:
-        is_favourite=True
+        is_favourite = True
 
+    form = AddCommentForm()
+    if form.validate_on_submit():
+        comment = Comment(body=form.body.data, user_id=current_user.id, post_id=post_id)
+        db.session.add(comment)
+        db.session.commit()
+        flash("Twój komentarz został pomyślnie dodany", "success")
+        return redirect(url_for("post", post_id=post.id))
 
+    comments = Comment.query.filter_by(post_id=post_id)
 
-    return render_template('post.html', title=post.name, post=post, is_favourite=is_favourite)
+    return render_template('post.html', title=post.name, post=post, form=form, is_favourite=is_favourite,
+                           comments=comments)
 
 
 @app.route("/post/new", methods=['GET', 'POST'])
@@ -244,7 +251,7 @@ def delete_post(post_id):
     if post.author != current_user and not current_user.is_admin:
         abort(403)
 
-    if is_favourite==True:
+    if is_favourite == True:
 
         db.session.delete(is_favourite)
         db.session.delete(post)

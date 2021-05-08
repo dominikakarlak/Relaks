@@ -1,5 +1,6 @@
 from Relaks import db, login_manager
 from flask_login import UserMixin
+from datetime import datetime
 
 
 @login_manager.user_loader
@@ -30,6 +31,7 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     fav = db.relationship('Favourite', backref='fav', lazy=True)
+    comments = db.relationship("Comment", backref='article', lazy=True)
 
     def __repr__(self):
         return f"Post('{self.name}', '{self.category}', '{self.time}')"
@@ -44,3 +46,12 @@ class Favourite(db.Model):
         return f"Favourite('{self.id}')"
 
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(200), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Comment('{self.body}', '{self.date_posted}')"

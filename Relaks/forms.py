@@ -104,3 +104,8 @@ class QuizForm(FlaskForm):
 
 class FavForm(FlaskForm):
     submit = SubmitField('Ulubione')
+
+
+class AddCommentForm(FlaskForm):
+    body = StringField("Treść", validators=[DataRequired()])
+    submit = SubmitField("Dodaj")
