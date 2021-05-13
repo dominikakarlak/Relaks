@@ -26,9 +26,11 @@ def stres():
 def dobor():
     return render_template('dobor.html', title='Dobór')
 
+
 @app.route("/strona")
 def strona():
     return render_template('strona.html')
+
 
 @app.route("/silny_stres")
 def silny_stres():
@@ -294,9 +296,6 @@ def user_posts(username):
     posts = Post.query.filter_by(author=user) \
         .paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
-
-
-
 
 
 @app.route("/answer", methods=['GET', 'POST'])

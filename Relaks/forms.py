@@ -96,7 +96,12 @@ class QuizForm(FlaskForm):
     q9 = SelectField('Czy jesteś otwarty na nowe doświadczenia?', validators=[DataRequired()],
                      choices=[('a', 'Raczej tak'), ('b', 'Raczej nie'),
                               ('c', 'Tak'), ('d', 'To zależy'), ])
-    q10 = SelectField('Czy wiesz, że pozytywna zmiana wymaga regularnej pracy?', validators=[DataRequired()],
+    q10 = SelectField('Jak najczęśniej reagujesz na stres?', validators=[DataRequired()],
+                      choices=[('a', 'Kołatanie serca'), ('b', 'Napięcie lub drżenie rąk/nóg'),
+                               ('c', 'Martwienie się, czarne scenariusze'),
+                               ('d', 'Zapominam, robi mi się w głowie "czarna dziura"'), ])
+
+    q11 = SelectField('Czy wiesz, że pozytywna zmiana wymaga regularnej pracy?', validators=[DataRequired()],
                       choices=[('a', 'Tak'), ('b', 'Raczej tak'),
                                ('c', 'Oczywiście, regularność to moje drugie imię'),
                                ('d', 'Postaram się być regularny'), ])

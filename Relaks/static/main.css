@@ -3,6 +3,7 @@ body {
   background-color: #bdc6bd;
   color: #333333;
   margin-top: 5rem;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -117,7 +118,7 @@ a.article-title:hover {
   color: #26432a;
 }
 
-.dropbtn {
+.dropdown-menu{
   background-color: #26432a;
   color: white;
   padding: 16px;
@@ -126,18 +127,17 @@ a.article-title:hover {
   cursor: pointer;
 }
 
+.dropdown-menu:hover
+{
+  color: #378a28;
+  border: none;
+}
 
-#footer {
-
-            padding: 10px 10px 0px 10px;
-            bottom: 0;
-            width: 100%;
-
-
-            background: grey;
-            color: black;
-            text-align: center;
-        }
+.form-control-label
+{
+  visibility: hidden;
+  color:whitesmoke;
+}
 
 
 

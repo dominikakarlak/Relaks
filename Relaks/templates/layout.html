@@ -17,6 +17,7 @@
     {% else %}
         <title>Relaksacja</title>
     {% endif %}
+
 </head>
 <body>
 <header class="site-header">
@@ -44,7 +45,7 @@
                     </div>
                     <a class="nav-item nav-link" href="{{ url_for('stres') }}">Stres</a>
                     <a class="nav-item nav-link" href="{{ url_for('dobor') }}">Dobór </a>
-                    <a class="nav-item nav-link" href="{{ url_for('dobor') }}"> O stronie </a>
+                    <a class="nav-item nav-link" href="{{ url_for('strona') }}"> O stronie </a>
                     <a class="nav-item nav-link" href="{{ url_for('silny_stres') }}"> Silny stres  </a>
 
                     {% if current_user.is_authenticated %}
@@ -69,9 +70,9 @@
 </header>
 
 
-<main role="main" class="container">
+<main role="main" class="container" style="margin-bottom: 10%">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8" style="margin-bottom: 10%">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
@@ -112,7 +113,8 @@
 </main>
 
 
-<footer id="footer" style=" position: -ms-device-fixed; padding: 10px 10px 10px 10px; bottom: 0; width: 100%; background: grey; color: black; text-align: center;">
+
+<footer id="footer" style="clear: both; bottom: 0; padding: 2% 2% 7% 2%; width: 100%; height: 7%;  margin-top: 3%; position: fixed">
     <p> Autorem niniejszego serwisu jest Dominika Karlak. <br>
     <p> Serwis ten stanowi integralną część pracy licencjackiej (kierunek: Elektroniczne Przetwarzanie Informacji),
         przygotowanej pod kierunkiem dr. Piotra Jordana Śliwińskiego na Wydziale Zarządzania i Komunikacji Społecznej
@@ -121,6 +123,7 @@
 
 
 </footer>
+
 
 <!-- Optional JavaScript -->
 

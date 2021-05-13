@@ -40,7 +40,7 @@
         .slideshow-container {
             max-width: 1000px;
             position: relative;
-            margin: auto;
+            margin: 3%;
             border-radius: 4%;
         }
 
@@ -131,7 +131,7 @@
                     </div>
                     <a class="nav-item nav-link" href="{{ url_for('stres') }}">Stres</a>
                     <a class="nav-item nav-link" href="{{ url_for('dobor') }}">Dobór </a>
-                    <a class="nav-item nav-link" href="{{ url_for('dobor') }}"> O stronie </a>
+                    <a class="nav-item nav-link" href="{{ url_for('strona') }}"> O stronie </a>
                     <a class="nav-item nav-link" href="{{ url_for('silny_stres') }}"> Silny stres! </a>
 
 
@@ -161,7 +161,8 @@
 
 
     <div style="border-radius: 2%">
-        <h1 style="text-align: center; margin: 5%"> Relaksacja dla zapracowanych </h1>
+        <h1 style="text-align: left; margin: 5%;padding-left: 10%; font-weight: bold"> Relaksacja dla
+            zapracowanych </h1>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -176,25 +177,28 @@
 
             <div class="mySlides fade">
 
-                <img src="static/background/medytacja.jpg" style="width:877px; height: 600px">
-                <div class="text"> Świadomy oddech </div>
+                <img src="static/background/medytacja.jpg" style="width:1000px; height: 600px" alt="Medytująca kobieta">
+                <div class="text"> Świadomy oddech</div>
             </div>
 
             <div class="mySlides fade">
 
-                <img src="static/background/dziecko.jpg" style="width:877px; height: 600px">
-                <div class="text"> Wizualizacje </div>
+                <img src="static/background/dziecko.jpg" style="width:1000px; height: 600px"
+                     alt="Rzeźba ludzi z krat z dziećmi w środku">
+                <div class="text"> Wizualizacje</div>
             </div>
 
             <div class="mySlides fade">
 
-                <img src="static/background/mind.png" style="width:877px; height: 600px">
-                <div class="text"> Mindfullness  </div>
+                <img src="static/background/mind.png" style="width:1000px; height: 600px"
+                     alt="Głowa ze światłem w środku">
+                <div class="text"> Mindfullness</div>
             </div>
-              <div class="mySlides fade">
+            <div class="mySlides fade">
 
-                <img src="static/background/stres.jpg" style="width:877px; height: 600px">
-                <div class="text"> Rozluźnienie mięśni </div>
+                <img src="static/background/stres.jpg" style="width:1000px; height: 600px"
+                     alt="Kierunkowskaz: relaks czy stres">
+                <div class="text"> Rozluźnienie mięśni</div>
             </div>
 
         </div>
@@ -206,37 +210,39 @@
             <span class="dot"></span>
             <span class="dot"></span>
         </div>
-        <h2 style="margin: 2%"> Na tej stronie: </h2>
+        <h2 style="margin: 2%; padding-left: 4%; font-weight: bold"> Na tej stronie: </h2>
 
         <div class="div4"
-             style="display: inline-block; width: 30%; text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
-            <a href="{{ url_for('stres') }}" style="color: darkslategrey"> Przeczytasz, dlaczego relaks powinien być dla Ciebie
+             style="display: inline-block; width: 40%; text-align: center; background-color: whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
+            <a href="{{ url_for('stres') }}" style="color: darkslategrey"> Przeczytasz, dlaczego relaks powinien być dla
+                Ciebie
                 jest ważny </a>
 
         </div>
         <div class="div4"
-             style="display: inline-block; width: 30%;  text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
-            <a href="{{ url_for('dobor') }}" style="color: darkslategrey"> Dowiesz się jaka technika relaksacji pasuje do Ciebie najlepiej </a>
+             style="display: inline-block; width: 40%;  text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
+            <a href="{{ url_for('dobor') }}" style="color: darkslategrey"> Dowiesz się, jaka technika relaksacji pasuje
+                do Ciebie najlepiej </a>
 
 
         </div>
 
         <div class="div4"
-             style="display: inline-block; width: 30%;  text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
+             style="display: inline-block; width: 40%;  text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
             Poznasz ćwiczenia, które pomogą Ci się zrelaksować
 
 
         </div>
 
         <div class="div4"
-             style="display: inline-block; width: 30%; text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
+             style="display: inline-block; width: 40%; text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
             <a href="{{ url_for('ulubione') }}" style="color: darkslategrey"> Stworzysz unikalną listę swoich
                 ulubionych ćwiczeń relaksacyjnych </a>
 
         </div>
 
 
-        <div style="background-color: whitesmoke;   padding: 5% 5% 5% 5%; width: 85%">
+        <div style="background-color: whitesmoke; padding: 5% 5% 5% 5%; width: 95%; margin-bottom: 10%; border-radius: 2%">
             <h2 style="margin-bottom: 4%; margin-left: 2%"> Techniki relaksacji: </h2>
 
             <h4><a href="{{ url_for('oddech') }}" style="color: darkslategrey"> Świadomy oddech </a></h4>
@@ -265,7 +271,7 @@
 
 
             <h4><a href="{{ url_for('miesnie') }}" style="color: darkslategrey;"> Wykorzystanie mięśni </a></h4>
-            <p> Odczuwanie ciężkości związane jest z rozluźnieniem mięśni. Stan ten możesz osiągnąć przed zapadnięciem
+            <p> Ta technika relaksacyjna
                 <br>
                 w sen lub po dużej aktywności fizycznej. </p>
             <p>Jeżeli zaś chcesz świadomie rozluźnić mięśnie, możesz wypowiedzieć autosugestię dotyczącą ich ciężkości.
@@ -279,6 +285,19 @@
 
 
             <h4><a href="{{ url_for('wizualizacje') }}" style="color: darkslategrey"> Wizualizacje </a></h4>
+            <p>
+                Wizualizacja to naturalna zdolność mózgu, która polega na świadomym tworzeniu obrazów w umyśle. <br>
+                Umiejętność wydaje się bardzo prosta, ponieważ człowiek myśli za pomocą wewnętrznych obrazów. Robi to
+                jednak nieświadomie.  </p>
+            <ul> W twórczej wizualizacji można tę łatwość wyobrażania wykorzystać żeby:
+                <li>zrelaksować się,</li>
+                <li>zregenerować,</li>
+                <li>poprawić stan zdrowia,</li>
+                <li>pozytywnie wpłynąć na psychikę,</li>
+                <li>zrealizować cel.</li>
+            </ul>
+
+
 
 
             <h4><a href="{{ url_for('inne') }}" style="color: darkslategrey"> Inne </a></h4>
@@ -291,8 +310,7 @@
 </main>
 
 
-<footer id="footer"
-        style=" position: -ms-device-fixed; padding: 10px 10px 10px 10px; bottom: 0; width: 100%; background: grey; color: black; text-align: center;">
+<footer id="footer" style="clear: both; bottom: 0; padding: 2% 2% 2% 2%; width: 100%; height: 7%;  margin-top: 3%;">
     <p> Autorem niniejszego serwisu jest Dominika Karlak. <br>
     <p> Serwis ten stanowi integralną część pracy licencjackiej (kierunek: Elektroniczne Przetwarzanie Informacji),
         przygotowanej pod kierunkiem dr. Piotra Jordana Śliwińskiego na Wydziale Zarządzania i Komunikacji Społecznej
@@ -316,25 +334,27 @@
         crossorigin="anonymous"></script>
 
 <script>
-var slideIndex = 0;
-showSlides();
+    var slideIndex = 0;
+    showSlides();
 
-function showSlides() {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("dot");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-  setTimeout(showSlides, 5000); // Change image every 2 seconds
-}
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        setTimeout(showSlides, 5000); // Change image every 2 seconds
+    }
 </script>
 
 </body>
