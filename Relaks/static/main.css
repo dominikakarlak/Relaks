@@ -9,6 +9,16 @@ h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
 
+.div4 {
+
+}
+
+.div4:hover{
+  opacity: 1;
+  transition: 0.3s all linear;
+  transform: scale(1.1);
+  background-color: lightyellow;
+}
 .bg-steel {
   background-color: #26432a;
 ;
@@ -118,13 +128,47 @@ a.article-title:hover {
 
 
 #footer {
-            position: fixed;
+
             padding: 10px 10px 0px 10px;
             bottom: 0;
             width: 100%;
-            /* Height of the footer*/
-            height: 10%;
+
+
             background: grey;
             color: black;
             text-align: center;
         }
+
+
+
+@media (max-width: 575.98px) {
+  .img {
+    width: 30%;
+  }
+  .div4 {
+    width: 100%;
+    display: block;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .img {
+    width: 30%;
+  }
+  .div4 {
+    width: 100%;
+    display: block;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .div4
+  {
+    width: 100%;
+    display: block;
+  }
+}
+
+
+
+

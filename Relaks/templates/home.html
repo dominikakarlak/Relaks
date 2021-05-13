@@ -1,27 +1,341 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% extends "layout.html" %}
-{% block content %}
-
-     <h1 style="text-align: center"> Relaksacja dla zapracowanych </h1>
-
-         <div class="content-section" style="display: block">
-               <h2 style="text-align: center"> Na tej stronie: </h2>
-               <li> <a href="{{ url_for('stres') }}" style="color: darkslategrey"> Dowiesz się dlaczego relaks jest ważny. </a> </li>
-               <li> <a href="{{ url_for('dobor') }}" style="color: darkslategrey"> Wybierzesz odpowiednią dla siebie technikę relaksacji. </a> </li>
-               <li>  Poznasz krótkie ćwiczenia: </li>
-                    <ul>
-                        <li> <a href="{{ url_for('oddech') }}" style="color: darkslategrey">  oddechowe, </a> </li>
-                        <li> <a href="{{ url_for('miesnie') }}" style="color: darkslategrey">  z użyciem mięśni, </a> </li>
-                        <li> <a href="{{ url_for('mindfullness') }}" style="color: darkslategrey">  midfullness, </a> </li>
-                        <li> <a href="{{ url_for('wizualizacje') }}" style="color: darkslategrey">  wizualizacyjne, </a> </li>
-                        <li> <a href="{{ url_for('inne') }}" style="color: darkslategrey">  i inne. </a> </li>
-
-                    </ul>
-                <li> <a href="{{ url_for('ulubione') }}" style="color: darkslategrey"> Stworzysz swój uniaklny plan działania. </a> </li>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
-           </div>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    {% if title %}
+        <title>Relaksacja - {{ title }}</title>
+    {% else %}
+        <title>Relaksacja</title>
+    {% endif %}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Verdana, sans-serif;
+            border-radius: 4%;
+
+        }
+
+        .mySlides {
+            display: none;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+            border-radius: 4%;
+        }
+
+        /* Caption text */
+        .text {
+            color: black;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: -moz-left;
+        }
 
 
+        /* The dots/bullets/indicators */
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
 
-{% endblock content %}
+        .active {
+            background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 6s;
+        }
+
+        @-webkit-keyframes fade {
+            from {
+                opacity: .4
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .4
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+            .text {
+                font-size: 11px
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+            <a class="navbar-brand mr-4" href="/">Relaksacja</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ćwiczenia relaksacyjne
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ url_for('oddech') }}"> oddechowe </a>
+                            <a class="dropdown-item" href="{{ url_for('miesnie') }}"> mięśniowe </a>
+                            <a class="dropdown-item" href="{{ url_for('mindfullness') }}"> mindfullness </a>
+                            <a class="dropdown-item" href="{{ url_for('wizualizacje') }}"> wizualizacyjne </a>
+                            <a class="dropdown-item" href="{{ url_for('inne') }}"> inne </a>
+                        </div>
+                    </div>
+                    <a class="nav-item nav-link" href="{{ url_for('stres') }}">Stres</a>
+                    <a class="nav-item nav-link" href="{{ url_for('dobor') }}">Dobór </a>
+                    <a class="nav-item nav-link" href="{{ url_for('dobor') }}"> O stronie </a>
+                    <a class="nav-item nav-link" href="{{ url_for('silny_stres') }}"> Silny stres! </a>
+
+
+                    {% if current_user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{{ url_for('ulubione') }}">Ulubione </a>
+                    {% endif %}
+
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{{ url_for('new_post') }}">Nowe ćwiczenie</a>
+                        <a class="nav-item nav-link" href="{{ url_for('account') }}">Konto</a>
+                        <a class="nav-item nav-link" href="{{ url_for('logout') }}">Wyloguj</a>
+                    {% else %}
+                        <a class="nav-item nav-link" href="{{ url_for('login') }}">Zaloguj</a>
+                        <a class="nav-item nav-link" href="{{ url_for('register') }}">Zarejestruj</a>
+                    {% endif %}
+                </div>
+            </div>
+
+    </nav>
+</header>
+
+
+<main role="main" class="container">
+
+
+    <div style="border-radius: 2%">
+        <h1 style="text-align: center; margin: 5%"> Relaksacja dla zapracowanych </h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+
+                <img src="static/background/medytacja.jpg" style="width:877px; height: 600px">
+                <div class="text"> Świadomy oddech </div>
+            </div>
+
+            <div class="mySlides fade">
+
+                <img src="static/background/dziecko.jpg" style="width:877px; height: 600px">
+                <div class="text"> Wizualizacje </div>
+            </div>
+
+            <div class="mySlides fade">
+
+                <img src="static/background/mind.png" style="width:877px; height: 600px">
+                <div class="text"> Mindfullness  </div>
+            </div>
+              <div class="mySlides fade">
+
+                <img src="static/background/stres.jpg" style="width:877px; height: 600px">
+                <div class="text"> Rozluźnienie mięśni </div>
+            </div>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <h2 style="margin: 2%"> Na tej stronie: </h2>
+
+        <div class="div4"
+             style="display: inline-block; width: 30%; text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
+            <a href="{{ url_for('stres') }}" style="color: darkslategrey"> Przeczytasz, dlaczego relaks powinien być dla Ciebie
+                jest ważny </a>
+
+        </div>
+        <div class="div4"
+             style="display: inline-block; width: 30%;  text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
+            <a href="{{ url_for('dobor') }}" style="color: darkslategrey"> Dowiesz się jaka technika relaksacji pasuje do Ciebie najlepiej </a>
+
+
+        </div>
+
+        <div class="div4"
+             style="display: inline-block; width: 30%;  text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
+            Poznasz ćwiczenia, które pomogą Ci się zrelaksować
+
+
+        </div>
+
+        <div class="div4"
+             style="display: inline-block; width: 30%; text-align: center; background-color: 	whitesmoke; padding: 10%; margin: 4%; border-radius: 2%; border-color: #444444 ">
+            <a href="{{ url_for('ulubione') }}" style="color: darkslategrey"> Stworzysz unikalną listę swoich
+                ulubionych ćwiczeń relaksacyjnych </a>
+
+        </div>
+
+
+        <div style="background-color: whitesmoke;   padding: 5% 5% 5% 5%; width: 85%">
+            <h2 style="margin-bottom: 4%; margin-left: 2%"> Techniki relaksacji: </h2>
+
+            <h4><a href="{{ url_for('oddech') }}" style="color: darkslategrey"> Świadomy oddech </a></h4>
+
+            <p> Na co dzień nie zwracasz uwagi na oddech. Oddech jest płytki i na ogół szybki. <br>
+                Prawidłowe oddychanie pomaga w utrzymaniu zdrowia, równowagi psychicznej i emocjonalnej. </p>
+
+            <ul><p style="font-weight: bold;"> Prawidłowy oddech powinien być:
+            </p>
+                <li> opierać się na wypełnieniu powietrzem całych płuc,</li>
+                <li> świadomy,</li>
+                <li> głęboki.</li>
+            </ul>
+            To właśnie z powodu nieprawidłowych nawyków oddechowych (np. płytkiego oddychania) możesz być zmęczony,
+            ponieważ mózg nie jest wystarczająco dotleniony. <br> <br>
+
+            <ul><p style="font-weight: bold"> Dzięki świadomemu oddechowi możesz:
+            </p>
+                <li> zmniejszyć lęk,</li>
+                <li> uspokoić bieg myśli,</li>
+                <li> dotlenić komórki w ciele,</li>
+                <li> zwiększyć poziom witalności</li>
+            </ul>
+            <br>
+            <br>
+
+
+            <h4><a href="{{ url_for('miesnie') }}" style="color: darkslategrey;"> Wykorzystanie mięśni </a></h4>
+            <p> Odczuwanie ciężkości związane jest z rozluźnieniem mięśni. Stan ten możesz osiągnąć przed zapadnięciem
+                <br>
+                w sen lub po dużej aktywności fizycznej. </p>
+            <p>Jeżeli zaś chcesz świadomie rozluźnić mięśnie, możesz wypowiedzieć autosugestię dotyczącą ich ciężkości.
+                Celowe
+                wywoływanie w sobie odczucia ciężaru sprzyja zarówno rozluźnieniu mięśni jak
+                i relaksacji umysły. </p>
+            <p>Autosugestia, jaką możesz wypowiedzieć, to np. „Moje prawe ramię jest przyjemnie ciężkie”. </p>
+
+
+            <h4><a href="{{ url_for('mindfullness') }}" style="color: darkslategrey"> Mindfullness </a></h4>
+
+
+            <h4><a href="{{ url_for('wizualizacje') }}" style="color: darkslategrey"> Wizualizacje </a></h4>
+
+
+            <h4><a href="{{ url_for('inne') }}" style="color: darkslategrey"> Inne </a></h4>
+
+        </div>
+
+        {% block content %}{% endblock %}
+
+
+</main>
+
+
+<footer id="footer"
+        style=" position: -ms-device-fixed; padding: 10px 10px 10px 10px; bottom: 0; width: 100%; background: grey; color: black; text-align: center;">
+    <p> Autorem niniejszego serwisu jest Dominika Karlak. <br>
+    <p> Serwis ten stanowi integralną część pracy licencjackiej (kierunek: Elektroniczne Przetwarzanie Informacji),
+        przygotowanej pod kierunkiem dr. Piotra Jordana Śliwińskiego na Wydziale Zarządzania i Komunikacji Społecznej
+        Uniwersytetu Jagiellońskiego.
+    </p>
+
+
+</footer>
+
+<!-- Optional JavaScript -->
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script>
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 5000); // Change image every 2 seconds
+}
+</script>
+
+</body>
+</html>

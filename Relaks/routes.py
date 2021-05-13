@@ -26,6 +26,14 @@ def stres():
 def dobor():
     return render_template('dobor.html', title='Dobór')
 
+@app.route("/strona")
+def strona():
+    return render_template('strona.html')
+
+@app.route("/silny_stres")
+def silny_stres():
+    return render_template('silny_stres.html')
+
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -95,6 +103,7 @@ def register():
         admin = User(username="Admin", email="admin@email.com", password=hashed_password, is_admin=True)
         db.session.add(admin)
         db.session.commit()
+
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RegistrationForm()
@@ -104,7 +113,9 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(f'Twoje konto zostało utworzone! Teraz możesz się zalogować.', 'success')
+        print(user, file=sys.stderr)
         return redirect(url_for('login'))
+
     return render_template('register.html', title='Register', form=form)
 
 
@@ -283,6 +294,9 @@ def user_posts(username):
     posts = Post.query.filter_by(author=user) \
         .paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
+
+
+
 
 
 @app.route("/answer", methods=['GET', 'POST'])
