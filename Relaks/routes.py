@@ -144,7 +144,6 @@ def logout():
 
 
 @app.route("/oddechowe", methods=['GET', 'POST'])
-@login_required
 def oddech():
     page = request.args.get('page', 1, type=int)
     post = Post.query.filter(
@@ -154,7 +153,6 @@ def oddech():
 
 
 @app.route("/miesnie", methods=['GET', 'POST'])
-@login_required
 def miesnie():
     page = request.args.get('page', 1, type=int)
     post = Post.query.filter(
@@ -164,7 +162,6 @@ def miesnie():
 
 
 @app.route("/mindfullness", methods=['GET', 'POST'])
-@login_required
 def mindfullness():
     page = request.args.get('page', 1, type=int)
     post = Post.query.filter(
@@ -174,7 +171,6 @@ def mindfullness():
 
 
 @app.route("/wizualizacje", methods=['GET', 'POST'])
-@login_required
 def wizualizacje():
     page = request.args.get('page', 1, type=int)
     post = Post.query.filter(
@@ -184,7 +180,6 @@ def wizualizacje():
 
 
 @app.route("/inne", methods=['GET', 'POST'])
-@login_required
 def inne():
     page = request.args.get('page', 1, type=int)
 
@@ -194,6 +189,7 @@ def inne():
 
 
 @app.route("/post/<int:post_id>", methods=['GET', 'POST'])
+@login_required
 def post(post_id):
     post = Post.query.get_or_404(post_id)
 
@@ -256,19 +252,51 @@ def update_post(post_id):
     return render_template('update.html', title=update_post, post=post, form=form, legend='Edytuj post')
 
 
+@app.route("/comment/<int:comment_id>", methods=['POST', 'GET'])
+@login_required
+def comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+
+    return render_template('comment.html', comment=comment)
+
+
+@app.route("/post/<int:comment_id>/delete", methods=['POST', 'GET'])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+
+    if comment.author != current_user and not current_user.is_admin:
+        abort(403)
+
+    else:
+        db.session.delete(comment)
+
+    db.session.commit()
+
+    flash('Twój komentarz został usunięty ', 'success')
+    return redirect(url_for('home'))
+
+
 @app.route("/post/<int:post_id>/delete", methods=['POST', 'GET'])
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
-    is_favourite = Favourite.query.filter_by(user_id=current_user.id, post_id=post_id).first()
+    is_favourite = Favourite.query.filter_by(post_id=post_id).all()
+    is_comment = Comment.query.filter_by(post_id=post_id).all()
     if post.author != current_user and not current_user.is_admin:
         abort(403)
 
-    if is_favourite == True:
+    if len(is_comment) > 0:
 
-        db.session.delete(is_favourite)
+        for comment in is_comment:
+            db.session.delete(comment)
+
+    if len(is_favourite) > 0:
+
+        for favourite in is_favourite:
+            db.session.delete(favourite)
+
         db.session.delete(post)
-
 
     else:
         db.session.delete(post)
@@ -276,7 +304,7 @@ def delete_post(post_id):
     db.session.commit()
 
     flash('Twój post został usunięty ', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for("post", post_id=post.id))
 
 
 @app.route("/category/<category>")
@@ -325,7 +353,7 @@ def answerinne():
 
 @app.route("/quiz", methods=['GET', 'POST'])
 def quiz():
-    form = QuizForm()
+    form = QuizForm(meta={'csrf': False})
     if form.validate_on_submit():
         res = {
             'a': 0,

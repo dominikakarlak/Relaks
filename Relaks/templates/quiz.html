@@ -2,41 +2,57 @@
 {% block content %}
     <h1 style="text-align: center"> Quiz </h1>
 
-{% if current_user.is_authenticated %}
+    {% if current_user.is_authenticated %}
 
-    <div class="content-section">
-         <div>
-        <form method="POST" action="">
-        {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Która technika najbardziej do Ciebie pasuje?</legend>
-                <div style="margin: 5%; font-size: large" class="form-group">{% for field in form %}
-                    {{ field.label(class="form-control-label") }}
+        <div class="content-section">
+            <div>
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Która technika najbardziej do Ciebie pasuje?</legend>
 
-                    {% if field.errors %}
-                        {{ field(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in field.errors %}
-                                <span>{{ error }}</span>
+                        <div style="margin: 2%;  font-size: large" class="form-group">
+                            {% for field in form %}
+
+                                {{ field.label(class="form-group") }}
+
+                                {% if field.errors %}
+                                    {{ field(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in field.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ field(class="form-control form-control-lg") }}
+                                {% endif %}
                             {% endfor %}
                         </div>
-                    {% else %}
-                        {{ field(class="form-control form-control-lg") }}
-                    {% endif %}
-                {% endfor %}
-                </div>
-            </fieldset>
-            <input type="submit" class="btn btn-primary" value="prześlij">
-        </form>
-          </div>
-    </div>
+                    </fieldset>
+                    <input type="submit" class="btn btn-primary" value="prześlij">
+                </form>
+            </div>
+
+            <div style="margin: 5%">
+                <small>
+                    <p> Wszystkie dane zebrane podczas tego quizu w momencie zamknięcia zostaną zapomniane,
+                        zgodnie <br> z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016
+                        r.  w
+                        sprawie ochrony osób fizycznych w związku
+                        z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia
+                        dyrektywy 95/46/WE (RODO).
+                    </p>
+                </small>
+            </div>
+        </div>
 
 
     {% else %}
 
-    <p> Musisz się zalogować, żeby mieć dostęp do quizu. <a class="ml-2" href="{{ url_for('login') }}">Zaloguj</a></p>
+        <p> Musisz się zalogować, żeby mieć dostęp do quizu. <a class="ml-2" href="{{ url_for('login') }}">Zaloguj</a>
+        </p>
 
 
 
-        {% endif %}
+    {% endif %}
 {% endblock content %}

@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
     fav = db.relationship('Favourite', backref='author', lazy=True)
+    comments = db.relationship('Comment', backref='author', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
