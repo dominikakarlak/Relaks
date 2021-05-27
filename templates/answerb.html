@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="text-align: center"> Twoje wyniki </h1>
+    <div class="content-section">
+        <div style="margin: 10px;">
+            <h3 style="text-align: center"> Najlepszym ćwiczeniem dla Ciebie będą <br>
+                <bold><a href="{{ url_for('miesnie') }}" style="color: olivedrab"> ćwiczenia z wykorzystaniem
+                    mięśni </a></bold>
+            </h3>
+
+
+             <table border="1" style=" margin:10%; padding: 3%">
+                <td>
+            <h6 style="display: block; margin-left: 10%; font-weight: bold; padding: 3% "> Pamiętaj! </h6> <br>
+            <p style="display: block; margin-left: 10%"> Umysł zaniepokojony nie może istnieć w zrelaksowanym ciele.
+
+            <p style="text-align: right; margin: 2%"> Edmund Jacobson </p>
+                </td>
+                </table>
+
+            <h6 style="margin-top: 4%"> Świadoma praca z mięśniami</h6>
+            <p style="display: block; margin: 1%"> Jeśli mięśnie są zbyt napięte, dochodzi do ich usztywnienia, a to
+                oznacza, że zmniejsza się przewodnictwo elektryczne. Kiedy mięsień jest rozluźniony, jego przewodność
+                elektryczna się zwiększa. <br> Chroniczne napięcie mięśni w wyniku stresu zaburza pracę całego
+                organizmu. Warto zatem nauczyć się technik,które pomagają świadomie rozluźniać mięśnie, by odczuwać
+                dzięku temu również odprężenie mentalne. </p>
+            <p style="display: block; margin: 5%"> Pamiętaj!
+                Regularność ćwiczeń jest kluczem do lepszego samopoczucia. </p>
+        </div>
+
+    </div>
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="text-align: center"> Twoje wyniki </h1>
+    <div class="content-section">
+        <div style="margin: 10px;">
+            <h3 style="text-align: center"> Najlepszym ćwiczeniem dla Ciebie będą <br>
+                <bold><a href="{{ url_for('mindfullness') }}" style="color: olivedrab"> ćwiczenia mindfullness</a>
+                </bold>
+            </h3>
+
+            <table border="1" style=" margin:10%; padding: 3%">
+                <td>
+                    <h6 style="display: block; margin-left: 10%; font-weight: bold; padding: 3% "> Pamiętaj! </h6> <br>
+                    <p style="display: block; margin-left: 10%"> Celem praktyki jest utrzymanie umysłu początkującego.
+                        Nasz prawdziwy umysł zawiera wszystko w sobie. <br> W umyśle początkującego jest wiele
+                        możliwości. <br>
+                        W umyśle eksperta tylko kilka.
+                    <p style="text-align: right; margin: 2%"> Shunryu Suzuki </p>
+                </td>
+            </table>
+
+
+            <p> Ćwiczenia mindfullness skupiają się na tu i teraz. Skup się na swoim ciele,
+                oddechu, poczuj wszystkie bodźce, które do ciebie napływają. </p>
+
+            <p> Dzięki praktykowaniu obecności, czyli doświadczeaniu "tu i teraz", wychodzisz z więzienia przeszłosci i
+                przyszłości. Stajesz się kreatorem swojego życia, wolnym od tego, co było, i tego, co będzie.
+                Doświadczasz życia, które dzieje się własnie teraz, kiedy czytasz te słowa. </p>
+            <p> Warto też wziąć sobie do serca słowa wietnamskiego mnicha buddyjskiego, Thich Nhat Hanha, który
+                propaguje mindfullness na całym świecie: <br> "Dlaczego tak często zamykamy się w więzieniu tego, co
+                minione? Aby naprawdę żyć, musimy powrócić do teraźniejszości i być w kontakcie z cudami, które istnieją
+                obecnie".</p>
+
+
+        </div>
+
+    </div>
+{% endblock content %}

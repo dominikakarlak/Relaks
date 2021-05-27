@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="text-align: center"> Twoje wyniki </h1>
+    <div class="content-section">
+        <div style="margin: 10px;">
+            <h3 style="text-align: center"> Najlepszym ćwiczeniem dla Ciebie będą <br>
+                <bold><a href="{{ url_for('inne') }}" style="color: olivedrab"> różnorodne ćwiczenia </a></bold>
+            </h3>
+
+
+            <table border="1" style=" margin:10%; padding: 3%">
+                <td>
+                    <h6 style="display: block; margin-left: 10%; font-weight: bold; padding: 3% "> Pamiętaj! </h6> <br>
+                    <p style="display: block; margin-left: 10%"> Kiedy się rodzisz, stanowisz niemal wyłącznie jeszcze
+                        niezrealizowany potencjał, w każdym z nas drzemią tysiące możliwości.
+
+                    <p style="text-align: right; margin: 2%"> Leo F. Buscaglia </p>
+                </td>
+            </table>
+
+
+            <p style="display: block"> Jesteś człowiekiem wszechstronnym, który lubi zmiany. Zajrzyj do różnych rodzajów
+                ćwiczeń, spróbuj jednego dnia ćwiczenia oddechowe,
+                a kolejnego np. wizualizacyjne. Spróbuj ćwiczeń humorystycznych, zaproś do relaksacji najbliższą osobę. Baw się, próbuj  i relaksuj :) </p>
+        </div>
+
+    </div>
+{% endblock content %}

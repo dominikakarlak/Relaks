@@ -1,0 +1,177 @@
+body {
+
+  background-color: #bdc6bd;
+  color: #333333;
+  margin-top: 5rem;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #444444;
+}
+
+.div4 {
+
+}
+
+.div4:hover{
+  opacity: 1;
+  transition: 0.3s all linear;
+  transform: scale(1.1);
+  background-color: lightyellow;
+}
+.bg-steel {
+  background-color: #26432a;
+;
+}
+
+.site-header .navbar-nav .nav-link {
+  background-color: #26432a;
+  color: white;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #489b39;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+.content-section {
+  background-color: whitesmoke;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 7px;
+  margin-bottom: 20px;
+}
+
+.article-title {
+  color: #489b39;
+}
+
+a.article-title:hover {
+  color: #378a28;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+  background-color: whitesmoke;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article {
+  background-color: whitesmoke;
+  color: dimgrey;
+
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3;
+  color: #444444;
+
+}
+
+.article-metadata a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+.col-md-4{
+  background-color: #bdc6bd;
+}
+
+.btn {
+  background-color: #26432a;
+}
+
+.mr-2 {
+  color: dimgrey;
+
+}
+.mr-2:hover {
+  color: #26432a;
+}
+
+.dropdown-menu{
+  background-color: #26432a;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-menu:hover
+{
+  color: #378a28;
+  border: none;
+}
+
+.form-control-label
+{
+  visibility: hidden;
+  color:whitesmoke;
+}
+
+
+
+@media (max-width: 575.98px) {
+  .img {
+    width: 30%;
+  }
+  .div4 {
+    width: 100%;
+    display: block;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .img {
+    width: 30%;
+  }
+  .div4 {
+    width: 100%;
+    display: block;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .div4
+  {
+    width: 100%;
+    display: block;
+  }
+}
+
+.form-group {
+  margin-top: 5%;
+}
+
+
+
